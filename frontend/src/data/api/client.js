@@ -16,7 +16,7 @@ class Client {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         this.http = axios.create({
             // baseURL: process.env.VUE_APP_ENV === 'local' ? process.env.VUE_APP_LOCAL_URL : process.env.VUE_APP_LIVE_URL,
-            baseURL: "http://127.0.0.1:8000/api/"
+            baseURL: "/api/"
             // baseURL: "/api/"
         });
 
