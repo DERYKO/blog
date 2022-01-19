@@ -59,6 +59,20 @@
                 </div>
             </div>
         </div>
+        <div class="flex flex-col flex-1 mb-10 mt-2">
+            <div class="flex w-full">
+                <el-pagination
+                    background
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="posts.current_page"
+                    :page-size="parseInt(posts.per_page)"
+                    :page-sizes="[10, 25, 50, 100]"
+                    layout="sizes, total, prev, pager, next, jumper"
+                    :total="posts.total">
+                </el-pagination>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -66,7 +80,6 @@ import {mapActions, mapGetters} from 'vuex';
 
 export default {
     mounted() {
-        console.log('here');
         this.getUserPosts({});
     },
     data() {
@@ -94,6 +107,18 @@ export default {
             }
             this.getUserPosts({
                 dir: this.dir
+            })
+        },
+        handleSizeChange(size) {
+            this.getFeed({
+                dir: this.dir,
+                per_page: size
+            })
+        },
+        handleCurrentChange(page) {
+            this.getFeed({
+                dir: this.dir,
+                page: page
             })
         }
     }

@@ -29,7 +29,7 @@
                             <p class="text-gray-700">Joined on {{ post.user.created_at }} </p>
                             <p class="font-bold">{{ post.title }}</p>
                             <p class="mt-3 text-gray-700 text-sm">
-                                {{ post.description.substring(0,100)}} ....
+                                {{ post.description.substring(0, 100) }} ....
                             </p>
                             <div class="mt-4 flex items-center">
                                 <div class="flex mr-2 text-gray-700 text-sm mr-3">
@@ -59,6 +59,20 @@
                 </div>
             </div>
         </div>
+        <div class="flex flex-col flex-1 mb-10 mt-2">
+            <div class="flex w-full">
+                <el-pagination
+                    background
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="posts.current_page"
+                    :page-size="parseInt(posts.per_page)"
+                    :page-sizes="[10, 25, 50, 100]"
+                    layout="sizes, total, prev, pager, next, jumper"
+                    :total="posts.total">
+                </el-pagination>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -68,7 +82,7 @@ export default {
     mounted() {
         this.getFeed({});
     },
-    data(){
+    data() {
         return {
             dir: 'desc'
         }
@@ -93,6 +107,18 @@ export default {
             }
             this.getFeed({
                 dir: this.dir
+            })
+        },
+        handleSizeChange(size) {
+            this.getFeed({
+                dir: this.dir,
+                per_page: size
+            })
+        },
+        handleCurrentChange(page) {
+            this.getFeed({
+                dir: this.dir,
+                page: page
             })
         }
     }
